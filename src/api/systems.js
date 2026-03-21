@@ -1,5 +1,9 @@
 import { spacetradersFetch } from "../apiClient.js";
 
+export async function getSystem(systemSymbol) {
+	return spacetradersFetch(`/systems/${systemSymbol}`, { method: "GET" });
+}
+
 /**
  * List all waypoints in a system.
  */

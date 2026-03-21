@@ -1,7 +1,8 @@
 import fs from "fs";
 import { getMyAgent } from "./src/api/agent.js";
-import { runBot } from "./src/bot.js";
 import { registerAgent } from "./src/api/register.js";
+import { readState } from "./src/stateManager.js";
+import { executeMineStrategy, executeExploreStrategy } from "./src/strategies.js";
 
 const cmd = process.argv[2];
 
@@ -16,7 +17,32 @@ async function main() {
         console.log(`Starting Faction: ${data.startingFaction}`);
         console.log(`Ship Count: ${data.shipCount}`);
     } else if (cmd === "run") {
-        await runBot();
+        console.log("Starting Strategy Daemon...");
+        const nextTickPerShip = {};
+
+        while (true) {
+            const state = readState();
+            const now = Date.now();
+
+            for (const shipSymbol of Object.keys(state.ships)) {
+                const strategy = state.ships[shipSymbol]?.strategy;
+                const nextTick = nextTickPerShip[shipSymbol] || 0;
+
+                if (strategy && strategy !== "IDLE" && now >= nextTick) {
+                    let sleepSecs = 10;
+                    
+                    if (strategy === "MINE") {
+                        sleepSecs = await executeMineStrategy(shipSymbol);
+                    } else if (strategy === "EXPLORE") {
+                        sleepSecs = await executeExploreStrategy(shipSymbol);
+                    }
+
+                    if (!sleepSecs || sleepSecs < 5) sleepSecs = 10;
+                    nextTickPerShip[shipSymbol] = Date.now() + sleepSecs * 1000;
+                }
+            }
+            await new Promise((r) => setTimeout(r, 2000));
+        }
     } else if (cmd === "register") {
         const callsign = process.argv[3] || process.env.SPACETRADERS_CALLSIGN;
         const faction = process.env.SPACETRADERS_FACTION || "AEGIS";
