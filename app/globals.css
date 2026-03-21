@@ -1,0 +1,65 @@
+:root {
+	/* Centralized Font Variable */
+	--font-primary: 'Inter', system-ui, sans-serif;
+
+	/* KSP2 Hologram Palette */
+	--bg-deep: #0D1117;     /* Intense dark space background */
+	--bg-panel: #161B22;    /* Main surface color */
+	--bg-card: #21262D;     /* Elevated surface */
+	
+	--accent-orange: #FF6A00; /* KSP vibrant orange */
+	--accent-cyan: #00E5FF;   /* High-contrast neon teal */
+	
+	--text-main: #E6EDF3;
+	--text-muted: #7D8590;
+
+	--border-color: #30363D;
+}
+
+body {
+	font-family: var(--font-primary);
+	background-color: var(--bg-deep);
+	color: var(--text-main);
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+/* Holographic Panel */
+.hologram-panel {
+	background-color: var(--bg-panel);
+	border: 1px solid var(--border-color);
+	/* Chamfered corners mapping to the KSP mechanical look */
+	clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+	padding: 1.5rem;
+	position: relative;
+	/* Flat, non-glowing aesthetic as requested */
+	box-shadow: none; 
+}
+
+/* Vibrant Accent Line */
+.hologram-panel::before {
+	content: '';
+	position: absolute;
+	top: 0; 
+	left: 0;
+	width: 4px;
+	height: 100%;
+	background-color: var(--accent-orange);
+}
+
+.hologram-panel.cyan-accent::before {
+	background-color: var(--accent-cyan);
+}
+
+/* High-tech label text */
+.tech-label {
+	color: var(--text-muted);
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-bottom: 0.25rem;
+	display: block;
+}

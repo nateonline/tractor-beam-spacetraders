@@ -5,9 +5,15 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"start": "node index.js"
+		"cli": "node index.js",
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start"
 	},
 	"dependencies": {
-		"dotenv": "^16.4.5"
+		"dotenv": "^16.4.5",
+		"next": "^16.2.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4"
 	}
 }

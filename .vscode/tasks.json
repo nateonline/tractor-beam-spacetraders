@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start SpaceTraders Dashboard",
+			"type": "npm",
+			"script": "dev",
+			"presentation": {
+				"panel": "dedicated",
+				"group": "spacetraders"
+			},
+			"problemMatcher": []
+		}
+	]
+}
