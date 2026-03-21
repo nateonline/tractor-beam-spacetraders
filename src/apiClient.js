@@ -10,16 +10,18 @@ export async function spacetradersFetch(endpoint, options = {}) {
 	const url = `${BASE_URL}${endpoint}`;
 	const token = process.env.SPACETRADERS_TOKEN;
 
-	if (!token) {
-		throw new Error(
-			"SPACETRADERS_TOKEN is missing in the environment variables.",
-		);
-	}
-
 	const defaultHeaders = {
 		"Content-Type": "application/json",
-		Authorization: `Bearer ${token}`,
 	};
+
+	if (endpoint !== "/register") {
+		if (!token) {
+			throw new Error(
+				"SPACETRADERS_TOKEN is missing in the environment variables.",
+			);
+		}
+		defaultHeaders["Authorization"] = `Bearer ${token}`;
+	}
 
 	const config = {
 		...options,
