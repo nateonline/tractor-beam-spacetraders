@@ -1,6 +1,6 @@
 :root {
 	/* Centralized Font Variable */
-	--font-primary: 'Inter', system-ui, sans-serif;
+	--font-primary: 'Consolas', 'Fira Code', 'Courier New', Courier, monospace;
 
 	/* KSP2 Hologram Palette */
 	--bg-deep: #0D1117;     /* Intense dark space background */
@@ -20,6 +20,7 @@ body {
 	font-family: var(--font-primary);
 	background-color: var(--bg-deep);
 	color: var(--text-main);
+	text-shadow: 0 0 6px rgba(230, 237, 243, 0.25);
 	margin: 0;
 	padding: 0;
 	display: flex;
